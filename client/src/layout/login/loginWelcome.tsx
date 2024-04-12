@@ -13,7 +13,7 @@ const LoginWelcome: React.FC = () => {
 
     const { View } = useLottie(defaultOptions);
     return (
-        <div className='bg-dark-accent w-full md:w-1/2  md:rounded-s-xl flex items-center'>
+        <div className='hidden bg-dark-accent absolute h-full w-full m-5 md:m-0 md:relative md:w-1/2  md:rounded-s-xl md:flex items-center'>
             <div className='w-full h-fit'>{View}</div>
         </div>
     );
