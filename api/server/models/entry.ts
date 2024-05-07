@@ -1,5 +1,3 @@
-import { HttpResponse } from './http-response';
-
 export const loginUsertoDatabase = async (userIdentifier: String, password: String, userIdentifierType: String) => {
     // try {
     //     let [result] : any = await pool.query(`SELECT PasswordHash FROM user_login_data WHERE ${userIdentifierType} = ?;`, [userIdentifier])
@@ -12,7 +10,7 @@ export const loginUsertoDatabase = async (userIdentifier: String, password: Stri
     //     }
     //     return new HttpResponse({"message" : "User not Found."}, 200);
     // } catch {
-    return new HttpResponse({ 'message': 'Internal Server Error.' }, 500);
+    return { 'message': 'Internal Server Error.', "httpCode": 500 };
     // }
 };
 export const registerUsertoDatabase = async (username: String, emailAddress: String, password: String) => {

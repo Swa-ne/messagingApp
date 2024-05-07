@@ -1,8 +1,12 @@
 import express, { Express, Request, Response } from 'express';
 import { checkEmailAvailability, checkUsernameAvailability, getUserIDByEmailAddress, getUserIDByUsername, loginUsertoDatabase, registerUsertoDatabase } from '../models/entry';
-import { HttpResponse } from '../models/http-response';
 
 import jwt from 'jsonwebtoken';
+
+export interface CustomResponse {
+    message: string,
+    httpCode: number
+}
 
 // Check Current User
 export const checkCurrentUser = async (req: Request, res: Response) => {
@@ -17,15 +21,15 @@ export const checkCurrentUser = async (req: Request, res: Response) => {
 // Logins
 export const loginUserController = async (req: Request, res: Response) => {
     try {
-        const userIdentifier: String = req.body.userIdentifier;
-        const password: String = req.body.password;
+        const userIdentifier: string = req.body.userIdentifier;
+        const password: string = req.body.password;
         const userIdentifierType = await checkInputType(userIdentifier);
         const checkerForInput = await checkEveryInputForLogin(userIdentifier, password, userIdentifierType);
         let userID;
-        if (checkerForInput.message['message'] === 'success') {
+        if (checkerForInput.message === 'success') {
             const data = await loginUsertoDatabase(userIdentifier, password, userIdentifierType);
-            let loginUpdate = data.message;
-            if (data.message['message'] === 'success') {
+            let loginUpdate: any = data.message;
+            if (data.message === 'success') {
                 const user = { name: userIdentifier };
                 const accessTokenSecret: any = process.env.ACCESS_TOKEN_SECRET;
                 const accessToken = jwt.sign(user, accessTokenSecret);
@@ -34,13 +38,13 @@ export const loginUserController = async (req: Request, res: Response) => {
                 } else {
                     userID = await getUserIDByEmailAddress(userIdentifier);
                 }
-                loginUpdate = { ...loginUpdate, accessToken: accessToken, userID: userID };
+                loginUpdate = { loginUpdate, accessToken: accessToken, userID: userID };
             }
 
-            res.status(data.code).json(loginUpdate);
+            res.status(data.httpCode).json(loginUpdate);
             return;
         }
-        res.status(checkerForInput.code).json(checkerForInput.message);
+        res.status(checkerForInput.httpCode).json(checkerForInput.message);
         return;
     } catch {
         res.status(500).json({ 'message': 'Internal Server Error' });
@@ -48,36 +52,36 @@ export const loginUserController = async (req: Request, res: Response) => {
     }
 };
 
-const checkInputType = async (userIdentifier: String) => {
+const checkInputType = async (userIdentifier: string) => {
     return userIdentifier.includes('@') ? 'EmailAddress' : 'Username';
 };
 
-const checkEveryInputForLogin = async (userIdentifier: String, password: String, userIdentifierType: String) => {
+const checkEveryInputForLogin = async (userIdentifier: string, password: string, userIdentifierType: string) => {
     if (userIdentifierType === 'Username') {
         if (!checkUsernameValidity(userIdentifier)) {
-            return new HttpResponse({ 'message': 'Invalid Username' }, 200);
+            return { 'message': 'Invalid Username', "httpCode": 200 };
         }
     } else {
         if (!checkEmailValidity(userIdentifier)) {
-            return new HttpResponse({ 'message': 'Invalid Email.' }, 200);
+            return { 'message': 'Invalid Email.', "httpCode": 200 };
         }
     }
     if (!checkPasswordValidity(password)) {
-        return new HttpResponse({ 'message': 'Invalid Password.' }, 200);
+        return { 'message': 'Invalid Password.', "httpCode": 200 };
     }
-    return new HttpResponse({ 'message': 'success' }, 200);
+    return { 'message': 'success', "httpCode": 200 };
 };
 
 // Registrations
 export const registerUserController = async (req: Request, res: Response) => {
-    const username: String = req.body.username;
-    const emailAddress: String = req.body.emailAddress.toLowerCase();
-    const confirmationEmailAddress: String = req.body.confirmationEmailAddress.toLowerCase();
-    const password: String = req.body.password;
-    const confirmationPassword: String = req.body.confirmationPassword;
+    const username: string = req.body.username;
+    const emailAddress: string = req.body.emailAddress.toLowerCase();
+    const confirmationEmailAddress: string = req.body.confirmationEmailAddress.toLowerCase();
+    const password: string = req.body.password;
+    const confirmationPassword: string = req.body.confirmationPassword;
 
     const checkerForInput = await checkEveryInputForSignup(username, emailAddress, confirmationEmailAddress, password, confirmationPassword);
-    if (checkerForInput.message['message'] === 'success') {
+    if (checkerForInput.message === 'success') {
         const data = registerUsertoDatabase(username, emailAddress, password);
         if (!data) {
             res.status(500).json({ 'message': 'Internal Server Error' });
@@ -85,49 +89,48 @@ export const registerUserController = async (req: Request, res: Response) => {
         }
     }
 
-    res.status(checkerForInput.code).json(checkerForInput.message);
+    res.status(checkerForInput.httpCode).json(checkerForInput.message);
     return;
 };
 
-const checkEveryInputForSignup = async (username: String, emailAddress: String, confirmationEmailAddress: String, password: String, confirmationPassword: String): Promise<HttpResponse> => {
+const checkEveryInputForSignup = async (username: string, emailAddress: string, confirmationEmailAddress: string, password: string, confirmationPassword: string): Promise<CustomResponse> => {
     if (!checkUsernameValidity(username)) {
-        return new HttpResponse({ 'message': 'Username must only contains letters and numbers.' }, 200);
+        return { 'message': 'Username must only contains letters and numbers.', "httpCode": 200 };
     }
     if (!checkEmailValidity(emailAddress)) {
-        return new HttpResponse({ 'message': 'Invalid Email.' }, 200);
+        return { 'message': 'Invalid Email.', "httpCode": 200 };
     }
     if (!checkPasswordValidity(password)) {
-        return new HttpResponse({ 'message': 'Password must have at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.' }, 200);
+        return { 'message': 'Password must have at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.', "httpCode": 200 };
     }
     if (!(await checkUsernameAvailability(username))) {
-        return new HttpResponse({ 'message': 'This username is being used.' }, 200);
+        return { 'message': 'This username is being used.', "httpCode": 200 };
     }
     if (!(await checkEmailAvailability(emailAddress))) {
-        return new HttpResponse({ 'message': 'This email address is being used.' }, 200);
+        return { 'message': 'This email address is being used.', "httpCode": 200 };
     }
     if (emailAddress !== confirmationEmailAddress) {
-        return new HttpResponse({ 'message': "Those email address didn't match. Try again." }, 200);
+        return { 'message': "Those email address didn't match. Try again.", "httpCode": 200 };
     }
     if (password !== confirmationPassword) {
-        return new HttpResponse({ 'message': "Those password didn't match. Try again." }, 200);
+        return { 'message': "Those password didn't match. Try again.", "httpCode": 200 };
     }
-    return new HttpResponse({ 'message': 'success' }, 200);
+    return { 'message': 'success', "httpCode": 200 };
 };
 
-const checkUsernameValidity = (username: String) => {
-    // TODO: max 25 characters
-    const regex = /^[a-zA-Z0-9]+$/;
+const checkUsernameValidity = (username: string) => {
+    const regex = /^[a-zA-Z0-9]{1,25}$/;
 
     return username.match(regex);
 };
 
-const checkEmailValidity = (emailAddress: String) => {
+const checkEmailValidity = (emailAddress: string) => {
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 
     return emailAddress.match(regex);
 };
 
-const checkPasswordValidity = (password: String) => {
+const checkPasswordValidity = (password: string) => {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s)./;
     // least one lowercase letter, one uppercase letter, one numeric digit, and one special character
     return password.match(regex);
