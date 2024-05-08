@@ -1,3 +1,4 @@
+import SearchBar from "./chatContainer/searchBar";
 
 export default function ChatContainer() {
     return (
@@ -5,6 +6,7 @@ export default function ChatContainer() {
             <h3 className="text-center py-3">
                 ChatList
             </h3>
+            <SearchBar />
         </div>
     );
 }
