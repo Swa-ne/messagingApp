@@ -13,4 +13,5 @@
 
 body {
     overflow-x: hidden;
+    @apply bg-dark-background;
 }
