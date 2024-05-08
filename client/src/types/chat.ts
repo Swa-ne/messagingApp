@@ -10,5 +10,6 @@ export interface Chat {
 export interface PersonChatProps {
     profile: string,
     name: string,
-    chat: Chat
+    chat: Chat,
+    isActive?: boolean
 }

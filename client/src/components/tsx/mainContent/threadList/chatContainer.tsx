@@ -1,5 +1,6 @@
 import ChatList from "./chatContainer/chatList";
 import SearchBar from "./chatContainer/searchBar";
+// import SearchList from "./chatContainer/searchList";
 
 export default function ChatContainer() {
     return (
@@ -9,6 +10,7 @@ export default function ChatContainer() {
             </h3>
             <SearchBar />
             <ChatList />
+            {/* <SearchList /> */}
         </div>
     );
 }
