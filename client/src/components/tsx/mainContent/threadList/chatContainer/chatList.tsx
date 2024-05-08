@@ -20,7 +20,7 @@ const mockData: PersonChatProps[] = [
             message: 'Hi John!',
             sender: 'Jane',
             reciever: 'John',
-            isRead: false,
+            isRead: true,
             timestamp: '2024-05-08T12:01:00'
         }
     },
@@ -39,7 +39,7 @@ const mockData: PersonChatProps[] = [
 
 export default function ChatList() {
     return (
-        <div className='thread-list w-full h-full bg-dark-background flex flex-col items-center'>
+        <div className='w-full bg-dark-background flex flex-col items-center py-3'>
             {mockData.map((data, idx) =>
                 <PersonChat key={idx} {...data} />
             )}

@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { PersonChatProps } from "../../../../../types/chat";
 import { formatTimestamp } from "../../../../../utils/convertTime";
 
 export default function PersonChat({ profile, name, chat }: PersonChatProps): React.ReactElement {
+    const [isActive, setIsActive] = useState(false)
     return (
-        <div className='thread-list w-11/12 h-[50px] bg-light-accent flex py-2 rounded'>
+        <div className={`thread-list w-11/12 h-[50px] ${isActive && "bg-light-accent bg-opacity-60"} hover:bg-opacity-30 flex py-2 rounded my-[1px]`}>
             <div className="w-[45px] p-1 mr-1 relative">
                 <div className="w-full h-full object-cover rounded-full overflow-hidden">
                     <img src={profile} className="w-full h-full object-cover" />
