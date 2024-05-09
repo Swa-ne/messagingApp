@@ -1,7 +1,7 @@
 export interface Chat {
     message: string,
     sender: string,
-    reciever: string,
+    receiver: string,
     isRead: boolean,
     timestamp: string
 }

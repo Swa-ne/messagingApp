@@ -8,7 +8,7 @@ const mockData: PersonChatProps[] = [
         chat: {
             message: 'Hello there!',
             sender: 'John',
-            reciever: 'Jane',
+            receiver: 'Jane',
             isRead: true,
             timestamp: '2024-05-08T12:00:00'
         }
@@ -19,7 +19,7 @@ const mockData: PersonChatProps[] = [
         chat: {
             message: 'Hi John!',
             sender: 'Jane',
-            reciever: 'John',
+            receiver: 'John',
             isRead: true,
             timestamp: '2024-05-08T12:01:00'
         }
@@ -30,7 +30,7 @@ const mockData: PersonChatProps[] = [
         chat: {
             message: 'Hey folks!',
             sender: 'Alice',
-            reciever: 'Bob',
+            receiver: 'Bob',
             isRead: false,
             timestamp: '2024-05-08T12:02:00'
         }
