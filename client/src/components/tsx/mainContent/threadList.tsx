@@ -1,9 +1,9 @@
-import ChatContainer from "./threadList/chatContainer";
+import ThreadListRoutes from "../../../routes";
 
 export default function ThreadList() {
     return (
-        <div className='w-[360px] flex justify-between items-center py-2 flex-col'>
-            <ChatContainer />
+        <div className='thread-list w-[350px] flex justify-between items-center py-2 flex-col'>
+            <ThreadListRoutes />
         </div>
     );
 }
