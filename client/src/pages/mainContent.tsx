@@ -1,3 +1,4 @@
+import ChatBox from '../components/tsx/mainContent/chatBox';
 import SideBar from '../components/tsx/mainContent/sidebar';
 import ThreadList from '../components/tsx/mainContent/threadList';
 
@@ -7,7 +8,7 @@ export default function MainContent() {
             <div className='bg-dark-primary w-screen md:w-11/12 md:h-95p md:rounded-2xl flex flex-col md:flex-row'>
                 <SideBar />
                 <ThreadList />
-                MainContent
+                <ChatBox />
             </div>
         </div>
     );
