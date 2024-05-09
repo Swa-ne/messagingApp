@@ -1,0 +1,43 @@
+.sender-area {
+    background-color: #343541;
+    height: auto;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    .input-place {
+        display: flex;
+        align-items: center;
+        background-color: #40414f;
+        border-radius: 7px;
+        width: 100%;
+        gap: 2px;
+        border: 1px solid #2e2f3a;
+        textarea {
+            outline: none;
+            border: none;
+            background: none;
+            width: calc(100% - 35px);
+            min-height: 20px;
+            max-height: 80px;
+            resize: none;
+            color: white;
+            padding: 5px;
+            margin-left: 5px;
+            &::placeholder {
+                color: #828e9e;
+            }
+        }
+        .send {
+            width: 30px;
+            height: 20px;
+            background-color: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            .send-icon {
+                width: 17px;
+            }
+        }
+    }
+}

@@ -15,7 +15,7 @@ export default function MainChat() {
         scrollToBottom();
     }, []);
     return (
-        <div className='w-auto h-[85%] m-1 cursor-default overflow-y-scroll' ref={containerRef}>
+        <div className='w-auto max-h-[85%] m-1 cursor-default overflow-y-scroll' ref={containerRef}>
             <div className="w-full flex flex-col justify-end">
                 <SenderBox message="fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1" timestamp="a" />
                 <SenderBox message="fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1fasdfdad1" timestamp="a" />
