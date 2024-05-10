@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
 import MoreIcon from "../../../../assets/more";
+import { useDispatch } from "react-redux";
+import { toggle } from "../../../../state/toggleComponent/toggleComponent";
 
 export default function ChatBoxHeader() {
     const [isOnline, setIsOnline] = useState(true)
+    const dispatch = useDispatch()
     useEffect(() => {
         setIsOnline(true)
     }, [])
+    const showDetailsOnClick = () => {
+        dispatch(toggle())
+    }
     return (
-        <div className='w-auto h-[40px] px-3 flex items-center justify-between py-1 my-[1px] cursor-default'>
+        <div onClick={showDetailsOnClick} className='w-auto h-[40px] px-3 flex items-center justify-between py-1 my-[1px] cursor-default'>
             <div className="w-[50%] flex">
                 <div className="w-[40px] mr-2 relative">
                     <div className="w-full h-full object-cover rounded-full overflow-hidden">
