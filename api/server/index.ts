@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express"
 import bodyParser from "body-parser"
-
+import cors from 'cors';
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 dotenv.config()
@@ -8,6 +8,7 @@ dotenv.config()
 import entryRoutes from "./routes/entry";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
+cors
 
 mongoose
   .connect(MONGODB_CONNECTION)
@@ -20,7 +21,12 @@ mongoose
 
 const app = express();
 const port = 3000;
-
+app.use(
+  cors({
+    origin: ['http://127.0.0.1:5173', "http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json())
 app.use(
   bodyParser.urlencoded({
