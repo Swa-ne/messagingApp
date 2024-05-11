@@ -3,6 +3,7 @@ import PeopleIcon from '../../../assets/people';
 import SettignsIcon from '../../../assets/settings';
 import LogoutIcon from '../../../assets/logout';
 import { Link } from 'react-router-dom';
+import { logout } from '../../../services/entry';
 
 export default function SideBar() {
     return (
@@ -16,7 +17,10 @@ export default function SideBar() {
                 </Link>
                 <SettignsIcon />
             </div>
-            <div className='flex flex-col justify-around'>
+            <div className='flex flex-col justify-around' onClick={() => {
+                logout()
+                window.location.reload();
+            }}>
                 <LogoutIcon />
             </div>
         </div>
