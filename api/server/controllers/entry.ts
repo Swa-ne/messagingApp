@@ -21,18 +21,17 @@ export const checkCurrentUser = async (req: Request, res: Response) => {
 // Logins
 export const loginUserController = async (req: Request, res: Response) => {
     try {
-        const userIdentifier: string = req.body.userIdentifier;
-        const password: string = req.body.password;
-        const checkerForInput = await checkEveryInputForLogin(userIdentifier, password);
+        const { emailAddress, password } = req.body;
+        const checkerForInput = await checkEveryInputForLogin(emailAddress, password);
         let userID;
         if (checkerForInput.message === 'success') {
-            const data = await loginUsertoDatabase(userIdentifier, password);
+            const data = await loginUsertoDatabase(emailAddress, password);
             let loginUpdate: any = data.message;
             if (data.message === 'success') {
-                const user = { name: userIdentifier };
+                const user = { name: emailAddress };
                 const accessTokenSecret: any = process.env.ACCESS_TOKEN_SECRET;
                 const accessToken = jwt.sign(user, accessTokenSecret);
-                userID = await getUserIDByEmailAddress(userIdentifier);
+                userID = await getUserIDByEmailAddress(emailAddress);
                 loginUpdate = { loginUpdate, accessToken: accessToken, userID: userID };
             }
 
@@ -41,7 +40,8 @@ export const loginUserController = async (req: Request, res: Response) => {
         }
         res.status(checkerForInput.httpCode).json(checkerForInput.message);
         return;
-    } catch {
+    } catch (e) {
+        console.log(e)
         res.status(500).json({ 'message': 'Internal Server Error' });
         return;
     }
@@ -95,11 +95,11 @@ const checkEveryInputForSignup = async (emailAddress: string, password: string, 
 const checkEmailValidity = (emailAddress: string) => {
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 
-    return emailAddress.match(regex);
+    return regex.test(emailAddress);
 };
 
 const checkPasswordValidity = (password: string) => {
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s)./;
     // least one lowercase letter, one uppercase letter, one numeric digit, and one special character
-    return password.match(regex);
+    return regex.test(password);
 };

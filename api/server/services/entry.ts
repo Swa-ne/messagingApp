@@ -1,19 +1,18 @@
 import * as bcrypt from "bcrypt";
 import { User, UserSchemaInterface } from "../models/user";
-export const loginUsertoDatabase = async (userIdentifier: String, password: String) => {
-    // try {
-    //     let [result] : any = await pool.query(`SELECT PasswordHash FROM user_login_data WHERE ${userIdentifierType} = ?;`, [userIdentifier])
-    //     if(result.length > 0){
-    //         result = result[0]["PasswordHash"]
-    //         if(await bcrypt.compare(password, result)){
-    //             return new HttpResponse({"message" : "success"}, 200);
-    //         }
-    //         return new HttpResponse({"message" : "Wrong Password."}, 200);
-    //     }
-    //     return new HttpResponse({"message" : "User not Found."}, 200);
-    // } catch {
-    return { 'message': 'Internal Server Error.', "httpCode": 500 };
-    // }
+export const loginUsertoDatabase = async (userIdentifier: string, password: string) => {
+    try {
+        let result = await User.findOne({ personalEmail: { $regex: new RegExp(`^${userIdentifier}$`, 'i') } });
+        if (result) {
+            if (await bcrypt.compare(password, result.passwordHash)) {
+                return { 'message': 'success', "httpCode": 200 };
+            }
+            return { 'message': 'Wrong Password.', "httpCode": 200 };
+        }
+        return { 'message': 'User not Found.', "httpCode": 200 };
+    } catch {
+        return { 'message': 'Internal Server Error.', "httpCode": 500 };
+    }
 };
 export const registerUsertoDatabase = async (
     firstName: string,
@@ -48,7 +47,7 @@ export const registerUsertoDatabase = async (
     }
 };
 
-export const checkEmailAvailability = async (emailAddress: String): Promise<boolean> => {
+export const checkEmailAvailability = async (emailAddress: string): Promise<boolean> => {
     try {
         const result: boolean = (await User.findOne({ personalEmail: { $regex: new RegExp(`^${emailAddress}$`, 'i') } })) === null;
         return result;
@@ -57,7 +56,7 @@ export const checkEmailAvailability = async (emailAddress: String): Promise<bool
     }
 };
 
-export const getUserIDByEmailAddress = async (emailAddress: String): Promise<UserSchemaInterface | null> => {
+export const getUserIDByEmailAddress = async (emailAddress: string): Promise<UserSchemaInterface | null> => {
     try {
         const result: UserSchemaInterface | null = await User.findOne({ personalEmail: { $regex: new RegExp(`^${emailAddress}$`, 'i') } });
         return result;
@@ -66,7 +65,7 @@ export const getUserIDByEmailAddress = async (emailAddress: String): Promise<Use
     }
 };
 
-// export const addRefreshToken = async (refreshToken : String) => {
+// export const addRefreshToken = async (refreshToken : string) => {
 //     try{
 //         const [result] : Array<any> = await pool.query(`INSERT INTO refresh_token (token) VALUES (?)`, refreshToken)
 //         return true
@@ -75,12 +74,12 @@ export const getUserIDByEmailAddress = async (emailAddress: String): Promise<Use
 //     }
 
 // }
-// export const checkRefreshToken = async (refreshToken : String) => {
+// export const checkRefreshToken = async (refreshToken : string) => {
 //     const [result] : Array<any> = await pool.query(`SELECT * FROM refresh_token WHERE token = ?;`, refreshToken)
 
 //     return result.length == 0
 // }
-// export const deleteRefreshToken = async (refreshToken : String) => {
+// export const deleteRefreshToken = async (refreshToken : string) => {
 //     // TODO: Delete token from db
 //     try{
 //         const [result] : Array<any> = await pool.query(`INSERT INTO refresh_token (token) VALUES (?)`, refreshToken)

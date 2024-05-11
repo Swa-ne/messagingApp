@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 import mongoose from "mongoose"
 dotenv.config()
 
-const entryRoutes = require("./routes/entry")
+import entryRoutes from "./routes/entry";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
 
