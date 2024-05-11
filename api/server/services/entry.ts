@@ -7,7 +7,7 @@ export const loginUsertoDatabase = async (userIdentifier: string, password: stri
             if (await bcrypt.compare(password, result.passwordHash)) {
                 return { 'message': 'success', "httpCode": 200 };
             }
-            return { 'message': 'Wrong Password.', "httpCode": 200 };
+            return { 'message': 'Sorry, looks like that\'s the wrong email or password.', "httpCode": 200 };
         }
         return { 'message': 'User not Found.', "httpCode": 200 };
     } catch {
@@ -56,7 +56,7 @@ export const checkEmailAvailability = async (emailAddress: string): Promise<bool
     }
 };
 
-export const getUserIDByEmailAddress = async (emailAddress: string): Promise<UserSchemaInterface | null> => {
+export const getDataByEmailAddress = async (emailAddress: string): Promise<UserSchemaInterface | null> => {
     try {
         const result: UserSchemaInterface | null = await User.findOne({ personalEmail: { $regex: new RegExp(`^${emailAddress}$`, 'i') } });
         return result;
