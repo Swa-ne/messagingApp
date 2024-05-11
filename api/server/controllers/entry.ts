@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from 'express';
-import { checkEmailAvailability, getUserIDByEmailAddress, loginUsertoDatabase, registerUsertoDatabase } from '../services/entry';
+import { checkEmailAvailability, getDataByEmailAddress, loginUsertoDatabase, registerUsertoDatabase } from '../services/entry';
 
 import jwt from 'jsonwebtoken';
 
@@ -23,7 +23,6 @@ export const loginUserController = async (req: Request, res: Response) => {
     try {
         const { emailAddress, password } = req.body;
         const checkerForInput = await checkEveryInputForLogin(emailAddress, password);
-        let userID;
         if (checkerForInput.message === 'success') {
             const data = await loginUsertoDatabase(emailAddress, password);
             let loginUpdate: any = data.message;
@@ -31,8 +30,8 @@ export const loginUserController = async (req: Request, res: Response) => {
                 const user = { name: emailAddress };
                 const accessTokenSecret: any = process.env.ACCESS_TOKEN_SECRET;
                 const accessToken = jwt.sign(user, accessTokenSecret);
-                userID = await getUserIDByEmailAddress(emailAddress);
-                loginUpdate = { loginUpdate, accessToken: accessToken, userID: userID };
+                const userData = await getDataByEmailAddress(emailAddress);
+                loginUpdate = { loginUpdate, accessToken: accessToken, userID: userData?._id, userFullName: `${userData?.firstName} ${userData?.middleName && `${userData?.middleName} `}${userData?.lastName}` };
             }
 
             res.status(data.httpCode).json(loginUpdate);
@@ -50,10 +49,10 @@ export const loginUserController = async (req: Request, res: Response) => {
 
 const checkEveryInputForLogin = async (userIdentifier: string, password: string) => {
     if (!checkEmailValidity(userIdentifier)) {
-        return { 'message': 'Invalid Email.', "httpCode": 200 };
+        return { 'message': 'Please enter a valid email address', "httpCode": 200 };
     }
     if (!checkPasswordValidity(password)) {
-        return { 'message': 'Invalid Password.', "httpCode": 200 };
+        return { 'message': 'Sorry, looks like that\'s the wrong email or password.', "httpCode": 200 };
     }
     return { 'message': 'success', "httpCode": 200 };
 };
@@ -78,7 +77,7 @@ export const registerUserController = async (req: Request, res: Response) => {
 
 const checkEveryInputForSignup = async (emailAddress: string, password: string, confirmationPassword: string): Promise<CustomResponse> => {
     if (!checkEmailValidity(emailAddress)) {
-        return { 'message': 'Invalid Email.', "httpCode": 200 };
+        return { 'message': 'Please enter a valid email address', "httpCode": 200 };
     }
     if (!checkPasswordValidity(password)) {
         return { 'message': 'Password must have at least one lowercase letter, one uppercase letter, one numeric digit, and one special character.', "httpCode": 200 };
