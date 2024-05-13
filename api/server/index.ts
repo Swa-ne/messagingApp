@@ -19,7 +19,7 @@ mongoose
     console.log('Internal Server Error');
   });
 
-const app = express();
+export const app = express();
 const port = 3000;
 app.use(
   cors({
