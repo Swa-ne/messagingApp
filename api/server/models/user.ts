@@ -13,7 +13,7 @@ export interface UserSchemaInterface extends Document {
 
 export interface ActiveUsersSchemeInterface extends Document {
     userId: string,
-    active: number,
+    active: string,
 }
 
 const UserSchema: Schema = new Schema({
@@ -64,9 +64,9 @@ const ActiveUsersScheme: Schema = new Schema({
         unique: true,
     },
     active: {
-        type: Number,
+        type: String,
         required: [true, 'Please enter user status.'],
-        default: 1
+        default: "0"
     }
 })
 
