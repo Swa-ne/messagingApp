@@ -11,11 +11,15 @@ export interface UserSchemaInterface extends Document {
     inbox: []
 }
 
+export interface ActiveUsersSchemeInterface extends Document {
+    userId: string,
+    active: number,
+}
+
 const UserSchema: Schema = new Schema({
     firstName: {
         type: String,
         required: [true, 'Please enter your first name.'],
-        unique: true,
     },
     middleName: {
         type: String,
@@ -23,7 +27,6 @@ const UserSchema: Schema = new Schema({
     lastName: {
         type: String,
         required: [true, 'Please enter your last name.'],
-        unique: true,
     },
     personalEmail: {
         type: String,
@@ -37,8 +40,7 @@ const UserSchema: Schema = new Schema({
     },
     birthday: {
         type: String,
-        required: [true, 'Please enter your username.'],
-        unique: true,
+        required: [true, 'Please enter your birthday.'],
     },
     passwordHash: {
         type: String,
@@ -55,4 +57,18 @@ const UserSchema: Schema = new Schema({
     timestamps: true,
 });
 
+const ActiveUsersScheme: Schema = new Schema({
+    userId: {
+        type: String,
+        required: [true, 'Please enter userId.'],
+        unique: true,
+    },
+    active: {
+        type: Number,
+        required: [true, 'Please enter user status.'],
+        default: 1
+    }
+})
+
 export const User = mongoose.model<UserSchemaInterface>("User", UserSchema)
+export const ActiveUsers = mongoose.model<ActiveUsersSchemeInterface>("ActiveUsers", ActiveUsersScheme)
