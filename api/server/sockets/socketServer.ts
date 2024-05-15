@@ -1,19 +1,31 @@
+import express from "express"
 import { Server } from "socket.io";
 import http from "http";
-import { app } from "..";
+import { ChangeUsersStatusToActive, ChangeUsersStatusToInactive, CheckUserStatusIfActive, GetAllActiveUsers } from "../services/active.users";
 
+const app = express();
+
+app.use(express.json())
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000"],
+        origin: ["http://localhost:3000", "http://localhost:5173/"],
         methods: ["GET", "POST"],
     },
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
     console.log("a user connected", socket.id);
-    socket.on("disconnect", () => {
+
+    const userId = socket.handshake.query.userId;
+    if (!CheckUserStatusIfActive(userId)) await ChangeUsersStatusToActive(userId, socket.id)
+
+    io.emit("getOnlineUsers", await GetAllActiveUsers());
+
+    socket.on("disconnect", async () => {
         console.log("user disconnected", socket.id);
+        await ChangeUsersStatusToInactive(userId)
+        io.emit("getOnlineUsers", await GetAllActiveUsers());
     });
 });
 

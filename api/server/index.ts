@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express"
+import express from "express"
 import bodyParser from "body-parser"
 import cors from 'cors';
 import dotenv from "dotenv"
@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 dotenv.config()
 
 import entryRoutes from "./routes/entry";
+import { app } from "./sockets/socketServer";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
 cors
@@ -19,7 +20,6 @@ mongoose
     console.log('Internal Server Error');
   });
 
-export const app = express();
 const port = 3000;
 app.use(
   cors({
