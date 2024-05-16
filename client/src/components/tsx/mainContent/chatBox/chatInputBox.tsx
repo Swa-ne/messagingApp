@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import '../../../scss/mainChat/chatInputBox.scss';
+import DefaultProps from '../../../../types/defaultProps';
 
-export default function ChatInputBox() {
+export default function ChatInputBox({ socket }: DefaultProps) {
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const sendButtonRef = useRef<HTMLDivElement>(null);
