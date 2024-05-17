@@ -6,10 +6,10 @@ import mongoose from "mongoose"
 dotenv.config()
 
 import entryRoutes from "./routes/entry";
+import userRoutes from "./routes/users";
 import { app, server } from "./sockets/socketServer";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
-cors
 
 mongoose
   .connect(MONGODB_CONNECTION)
@@ -35,6 +35,7 @@ app.use(
 );
 
 app.use("/entry/", entryRoutes)
+app.use("/user/", userRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello from your Node.js Express server!');

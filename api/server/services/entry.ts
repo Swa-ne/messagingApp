@@ -39,7 +39,8 @@ export const registerUsertoDatabase = async (
         }).save();
         activeUser = await new ActiveUsers({
             userId: userCredentialResult._id,
-            active: "0"
+            active: "0",
+            fullName: `${firstName} ${middleName && `${middleName} `}${lastName}`
         }).save();
 
     } catch (error) {

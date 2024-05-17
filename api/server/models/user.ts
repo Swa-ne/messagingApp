@@ -14,6 +14,8 @@ export interface UserSchemaInterface extends Document {
 export interface ActiveUsersSchemeInterface extends Document {
     userId: string,
     active: string,
+    profile: string,
+    fullName: string,
 }
 
 const UserSchema: Schema = new Schema({
@@ -67,6 +69,13 @@ const ActiveUsersScheme: Schema = new Schema({
         type: String,
         required: [true, 'Please enter user status.'],
         default: "0"
+    },
+    profile: {
+        type: String,
+        default: "https://i.pinimg.com/originals/58/51/2e/58512eb4e598b5ea4e2414e3c115bef9.jpg"
+    },
+    fullName: {
+        type: String
     }
 })
 
