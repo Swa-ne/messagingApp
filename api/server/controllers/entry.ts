@@ -27,11 +27,11 @@ export const loginUserController = async (req: Request, res: Response) => {
             const data = await loginUsertoDatabase(emailAddress, password);
             let loginUpdate: any = data.message;
             if (data.message === 'success') {
-                const user = { name: emailAddress };
+                const userData = await getDataByEmailAddress(emailAddress);
+                const user = { email: emailAddress, userId: userData?._id, userFullName: `${userData?.firstName} ${userData?.middleName && `${userData?.middleName} `}${userData?.lastName}` };
                 const accessTokenSecret: any = process.env.ACCESS_TOKEN_SECRET;
                 const accessToken = jwt.sign(user, accessTokenSecret);
-                const userData = await getDataByEmailAddress(emailAddress);
-                loginUpdate = { loginUpdate, accessToken: accessToken, userID: userData?._id, userFullName: `${userData?.firstName} ${userData?.middleName && `${userData?.middleName} `}${userData?.lastName}` };
+                loginUpdate = { loginUpdate, accessToken: accessToken, ...user };
             }
 
             res.status(data.httpCode).json(loginUpdate);
