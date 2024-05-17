@@ -9,7 +9,7 @@ app.use(express.json())
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000", "http://localhost:5173/"],
+        origin: ["http://localhost:5173", "http://localhost:5173/"],
         methods: ["GET", "POST"],
     },
 });
@@ -18,14 +18,23 @@ io.on("connection", async (socket) => {
     console.log("a user connected", socket.id);
 
     const userId = socket.handshake.query.userId;
-    if (!CheckUserStatusIfActive(userId)) await ChangeUsersStatusToActive(userId, socket.id)
+    try {
+        const isActive = await CheckUserStatusIfActive(userId);
+        console.log("User active status:", isActive);
 
-    io.emit("getOnlineUsers", await GetAllActiveUsers());
+        if (!isActive) {
+            await ChangeUsersStatusToActive(userId, socket.id);
+            console.log(`User status changed to active for userId: ${userId}, socketId: ${socket.id}`);
+        }
+    } catch (error) {
+        console.error("Error during user status check or update:", error);
+    }
+    io.emit("getOnlineUsers", await GetAllActiveUsers(userId));
 
     socket.on("disconnect", async () => {
         console.log("user disconnected", socket.id);
         await ChangeUsersStatusToInactive(userId)
-        io.emit("getOnlineUsers", await GetAllActiveUsers());
+        io.emit("getOnlineUsers", await GetAllActiveUsers(userId));
     });
 });
 
