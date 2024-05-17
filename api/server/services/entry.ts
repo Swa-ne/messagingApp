@@ -1,5 +1,5 @@
 import * as bcrypt from "bcrypt";
-import { User, UserSchemaInterface } from "../models/user";
+import { ActiveUsers, User, UserSchemaInterface } from "../models/user";
 export const loginUsertoDatabase = async (userIdentifier: string, password: string) => {
     try {
         let result = await User.findOne({ personalEmail: { $regex: new RegExp(`^${userIdentifier}$`, 'i') } });
@@ -23,7 +23,7 @@ export const registerUsertoDatabase = async (
     birthday: string,
     password: string
 ) => {
-    let userCredentialResult;
+    let userCredentialResult, activeUser;
 
     try {
         const saltRounds = await bcrypt.genSalt();
@@ -36,6 +36,10 @@ export const registerUsertoDatabase = async (
             personalNumber,
             birthday,
             passwordHash
+        }).save();
+        activeUser = await new ActiveUsers({
+            userId: userCredentialResult._id,
+            active: "0"
         }).save();
 
     } catch (error) {
