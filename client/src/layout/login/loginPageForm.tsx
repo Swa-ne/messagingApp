@@ -21,7 +21,7 @@ const LoginPageForm: React.FC<signupPageFormProps> = ({ changePage }) => {
         if (result.loginUpdate === "success") {
             cookies.set("authorization", result.accessToken);
             cookies.set("userFullName", result.userFullName);
-            cookies.set("userID", result.userID);
+            cookies.set("userId", result.userId);
 
             navigate("/");
             window.location.reload();

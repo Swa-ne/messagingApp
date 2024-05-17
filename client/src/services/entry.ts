@@ -22,7 +22,7 @@ export const login = async (data: LoginCredentials) => {
 export const logout = async () => {
     cookies.remove('authorization');
     cookies.remove('userFullName');
-    cookies.remove('userID');
+    cookies.remove('userId');
 };
 
 export const authenticateToken = async () => {
