@@ -6,7 +6,7 @@ import mongoose from "mongoose"
 dotenv.config()
 
 import entryRoutes from "./routes/entry";
-import { app } from "./sockets/socketServer";
+import { app, server } from "./sockets/socketServer";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
 cors
@@ -40,6 +40,6 @@ app.get('/', (req, res) => {
   res.send('Hello from your Node.js Express server!');
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
