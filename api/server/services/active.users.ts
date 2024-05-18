@@ -40,12 +40,3 @@ export async function CheckUserStatusIfActive(userId: any) {
         return false
     }
 }
-export async function GetAllActiveUsers(userId: any) {
-    try {
-        const result = await ActiveUsers.find({ userId: { $ne: userId }, active: { $ne: "0" } })
-        return result
-    } catch (error) {
-        console.error('Error finding user status:', error);
-        return false
-    }
-}
