@@ -1,15 +1,16 @@
 export interface Chat {
     message: string,
     sender: string,
-    receiver: string,
+    chatId: string,
     isRead: boolean,
     timestamp: string
 }
 
 
 export interface PersonChatProps {
+    userId?: string,
     profile: string,
-    name: string,
+    fullName: string,
     chat: Chat,
     isActive?: boolean
 }
