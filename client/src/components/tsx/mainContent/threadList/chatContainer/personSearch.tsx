@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PersonChatProps } from "../../../../../types/chat";
 
-export default function PersonSearch({ profile, name }: PersonChatProps): React.ReactElement {
+export default function PersonSearch({ profile, fullName }: PersonChatProps): React.ReactElement {
     const [isOnline, setIsOnline] = useState(true)
     useEffect(() => {
         setIsOnline(true)
@@ -15,7 +15,7 @@ export default function PersonSearch({ profile, name }: PersonChatProps): React.
                 {isOnline && <div className="bg-green-400 w-2 h-2 rounded-full absolute bottom-0 right-0 z-10"></div>}
             </div>
             <div className=" flex flex-col justify-center">
-                <h4 className="font-normal text-clip"> {name} </h4>
+                <h4 className="font-normal text-clip"> {fullName} </h4>
             </div>
         </div>
     );
