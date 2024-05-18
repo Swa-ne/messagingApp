@@ -61,8 +61,8 @@ const UserSchema: Schema = new Schema({
 
 const ActiveUsersScheme: Schema = new Schema({
     userId: {
-        type: String,
-        required: [true, 'Please enter userId.'],
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         unique: true,
     },
     active: {
