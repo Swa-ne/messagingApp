@@ -7,7 +7,7 @@ export default function PersonSearch({ profile, fullName }: PersonChatProps): Re
         setIsOnline(true)
     }, [])
     return (
-        <div className={`thread-list w-11/12 h-[30px] hover:bg-opacity-30 flex py-1 rounded my-[1px] cursor-pointer`}>
+        <div className={`thread-list h-[30px] hover:bg-opacity-30 flex py-1 rounded my-[1px] cursor-pointer`}>
             <div className="w-[30px] mr-2 relative">
                 <div className="w-full h-full object-cover rounded-full overflow-hidden">
                     <img src={profile} className="w-full h-full object-cover" />
