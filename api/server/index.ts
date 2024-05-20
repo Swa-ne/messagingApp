@@ -7,6 +7,7 @@ dotenv.config()
 
 import entryRoutes from "./routes/entry";
 import userRoutes from "./routes/users";
+import chatRoutes from "./routes/chat";
 import { app, server } from "./sockets/socketServer";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
@@ -36,6 +37,7 @@ app.use(
 
 app.use("/entry/", entryRoutes)
 app.use("/user/", userRoutes)
+app.use("/chat/", chatRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello from your Node.js Express server!');
