@@ -9,7 +9,6 @@ export default function ActiveContainer({ socket }: DefaultProps) {
     const [activePeople, setActivePeople] = useState([])
     const userId = cookies.get("userId")
     useEffect(() => {
-        console.log(userId)
         if (socket) {
             socket.on("getOnlineUsers", (users) => {
                 setActivePeople(() =>
