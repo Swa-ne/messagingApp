@@ -18,10 +18,10 @@ export default function ActiveContainer({ socket }: DefaultProps) {
     }, [socket, userId])
     useEffect(() => {
         async function fetchData() {
-            setActivePeople(await getActiveUsers())
+            setActivePeople((await getActiveUsers()).filter((user: PersonChatProps) => user.userId !== userId))
         }
         fetchData()
-    }, [])
+    }, [userId])
     return (
         <div className='w-full h-full bg-dark-background overflow-y-scroll'>
             <h3 className="p-3">
