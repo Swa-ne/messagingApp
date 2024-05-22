@@ -4,12 +4,21 @@ import ChatInputBox from "../chatBox/chatInputBox";
 import MainChat from "../chatBox/mainChat";
 import { Chat } from "../../../../types/chat";
 
-export default function ChatMainBox({ socket }: DefaultProps) {
+interface ChatMainBoxProps extends DefaultProps {
+    id: string | null
+}
+export default function ChatMainBox({ socket, id }: ChatMainBoxProps) {
     const [messages, setMessages] = useState<Chat[]>([])
     const addMessage = (message: Chat) => {
-        setMessages((prevState) => [...prevState, message])
+        if (id) {
+            message = { ...message, chatId: id }
+            setMessages((prevState) => [...prevState, message])
+        }
     }
-    return <>
-        <MainChat messages={messages} />
-        <ChatInputBox socket={socket} /></>
+    return (
+        <>
+            <MainChat messages={messages} />
+            <ChatInputBox socket={socket} addMessage={addMessage} />
+        </>
+    )
 }

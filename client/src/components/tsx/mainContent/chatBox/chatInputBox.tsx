@@ -1,11 +1,17 @@
 import { useRef, useState } from 'react';
 import '../../../scss/mainChat/chatInputBox.scss';
 import DefaultProps from '../../../../types/defaultProps';
+import { Chat } from '../../../../types/chat';
+import { cookies } from '../../../../services/entry';
 
-export default function ChatInputBox({ socket }: DefaultProps) {
+interface ChatInputBoxProps extends DefaultProps {
+    addMessage: (message: Chat) => void;
+}
+
+export default function ChatInputBox({ socket, addMessage }: ChatInputBoxProps) {
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const sendButtonRef = useRef<HTMLDivElement>(null);
+    const userId = cookies.get("userId")
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(event.target.value);
@@ -19,13 +25,21 @@ export default function ChatInputBox({ socket }: DefaultProps) {
     const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && inputValue.length > 0 && !event.shiftKey) {
             event.preventDefault();
-            console.log(inputValue)
-            setInputValue("")
-            if (sendButtonRef && sendButtonRef.current) {
-                sendButtonRef.current.click();
-            }
+            sendMessage()
         }
     };
+    const sendMessage = () => {
+        console.log(inputValue)
+        const newMessage = {
+            message: inputValue,
+            sender: userId,
+            chatId: "",
+            isRead: false,
+            timestamp: (new Date()).toISOString()
+        }
+        addMessage(newMessage)
+        setInputValue("")
+    }
 
     return (
         <div className='sender-area'>
@@ -39,7 +53,7 @@ export default function ChatInputBox({ socket }: DefaultProps) {
                     rows={1}
                     ref={textareaRef}
                 />
-                <div className='send' ref={sendButtonRef}>
+                <div className='send' onClick={sendMessage}>
                     <svg className='send-icon' version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 512 512' xmlSpace='preserve'>
                         <g>
                             <g>
