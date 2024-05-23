@@ -19,7 +19,7 @@ export const login = async (data: LoginCredentials) => {
     return response;
 };
 
-export const logout = async () => {
+export const logout = () => {
     cookies.remove('authorization');
     cookies.remove('userFullName');
     cookies.remove('userId');
