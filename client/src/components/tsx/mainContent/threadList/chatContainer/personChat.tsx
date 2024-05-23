@@ -21,7 +21,7 @@ export default function PersonChat({ profile, fullName, chat, isActive = false }
                     <span className={`${!chat.isRead && 'font-bold'} text-ellipsis overflow-hidden max-w-[80%]`}>
                         {chat.senderId ? `You: ${chat.message}` : chat.message}
                     </span>
-                    <span>{formatTimestamp(chat.timestamp)}</span>
+                    <span>{formatTimestamp(chat.createdAt)}</span>
                 </p>
             </div>
         </div>
