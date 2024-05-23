@@ -40,7 +40,6 @@ export const loginUserController = async (req: Request, res: Response) => {
         res.status(checkerForInput.httpCode).json(checkerForInput.message);
         return;
     } catch (e) {
-        console.log(e)
         res.status(500).json({ 'message': 'Internal Server Error' });
         return;
     }

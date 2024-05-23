@@ -26,7 +26,7 @@ function App() {
                     setSocket(newSocket)
                 }
             })
-            .catch((e) => console.log(e))
+            .catch((e) => console.error(e))
             .finally(() => {
                 setIsLoading(false);
             });

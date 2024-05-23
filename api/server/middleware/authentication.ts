@@ -12,7 +12,6 @@ interface AuthenticatedRequest extends Request {
 
 export function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const token = req.headers['authorization'];
-    console.log(token)
     if (token == null) return res.status(401).json({ message: 'Unauthorized' });
 
     verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, user) => {

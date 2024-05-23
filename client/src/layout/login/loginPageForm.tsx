@@ -17,7 +17,6 @@ const LoginPageForm: React.FC<signupPageFormProps> = ({ changePage }) => {
 
     const onLogin = async () => {
         const result = await login({ emailAddress, password })
-        console.log(result)
         if (result.loginUpdate === "success") {
             cookies.set("authorization", result.accessToken);
             cookies.set("userFullName", result.userFullName);
@@ -27,7 +26,6 @@ const LoginPageForm: React.FC<signupPageFormProps> = ({ changePage }) => {
             window.location.reload();
         } else {
             setError(result)
-            console.log("failed")
         }
 
     }

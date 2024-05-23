@@ -44,7 +44,6 @@ export const registerUsertoDatabase = async (
         }).save();
 
     } catch (error) {
-        console.log(error);
         if (userCredentialResult) {
             await userCredentialResult.deleteOne();
         }
