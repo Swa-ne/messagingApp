@@ -8,7 +8,7 @@ interface ChatInputBoxProps extends DefaultProps {
     addMessage: (message: Chat) => void;
 }
 
-export default function ChatInputBox({ socket, addMessage }: ChatInputBoxProps) {
+export default function ChatInputBox({ addMessage }: ChatInputBoxProps) {
     const [inputValue, setInputValue] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const userId = cookies.get("userId")
@@ -29,13 +29,17 @@ export default function ChatInputBox({ socket, addMessage }: ChatInputBoxProps) 
         }
     };
     const sendMessage = () => {
-        console.log(inputValue)
+
+        if (!inputValue.trim()) {
+            return;
+        }
+
         const newMessage = {
             message: inputValue,
-            sender: userId,
+            senderId: userId,
             chatId: "",
             isRead: false,
-            timestamp: (new Date()).toISOString()
+            createdAt: (new Date()).toISOString()
         }
         addMessage(newMessage)
         setInputValue("")
