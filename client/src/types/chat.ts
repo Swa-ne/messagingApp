@@ -1,9 +1,9 @@
 export interface Chat {
     message: string,
-    sender: string,
+    senderId: string,
     chatId: string,
     isRead: boolean,
-    timestamp: string
+    createdAt: string
 }
 
 
@@ -13,4 +13,12 @@ export interface PersonChatProps {
     fullName: string,
     chat: Chat,
     isActive?: boolean
+}
+export interface InboxDetails {
+    chatName: string,
+    createdAt: string,
+    isGroup: boolean,
+    profile: string,
+    wasActive: boolean,
+    _id: string
 }
