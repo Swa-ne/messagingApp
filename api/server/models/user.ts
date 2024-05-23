@@ -63,7 +63,6 @@ const ActiveUsersScheme: Schema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        unique: true,
     },
     active: {
         type: String,

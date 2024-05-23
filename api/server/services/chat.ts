@@ -1,15 +1,19 @@
 import mongoose from "mongoose";
 import { Inbox, Message } from "../models/chat"
+import { ActiveUsers } from "../models/user";
 
-export async function getChatMessages(chatId?: string) {
+export async function getChatMessages(chatId: string, page: string) {
     try {
         const result = await Message.find({ chatId })
+            .sort({ createdAt: -1 })
+            .skip((parseInt(page) - 1) * 30)
+            .limit(30);
         return result
     } catch (error) {
         return { message: error, httpCode: 500 };
     }
 }
-export async function storeMessage(message: string, senderId: string, chatId: string) {
+export async function saveMessage(message: string, senderId: string, chatId: string) {
     try {
         new Message({ message, senderId, chatId }).save()
         return { 'message': 'success', "httpCode": 200 };
@@ -39,6 +43,21 @@ export async function inboxAvailable(userIds: string[], isGroup: boolean) {
             isGroup
         });
         return inbox
+    } catch (error) {
+        return { message: error, httpCode: 500 };
+    }
+}
+export async function getInboxDetails(chatId: string, currentUserId: string) {
+    try {
+        const messages = await getChatMessages(chatId, "1")
+        const details = await Inbox.findById(chatId)
+        if (!details) {
+            return { message: 'Chat ID not found', httpCode: 404 }
+        }
+        const stringUserIds = details.userIds.filter(id => id.toString() !== currentUserId.toString())
+            .map(id => new mongoose.Types.ObjectId(id));
+        const activeDetails = await ActiveUsers.find({ userId: { $in: stringUserIds } })
+        return { message: { messages, details, activeDetails }, httpCode: 200 }
     } catch (error) {
         return { message: error, httpCode: 500 };
     }
