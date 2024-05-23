@@ -8,16 +8,16 @@ interface ActiveListProps {
 }
 export default function ActiveList({ activePeople }: ActiveListProps) {
     const navigate = useNavigate();
-    const handleClick = async (userId: string | undefined, data: PersonChatProps) => {
+    const handleClick = async (userId: string | undefined) => {
         if (userId) {
             const inbox = await createInbox(userId)
-            navigate(`/active/${inbox._id}`, { state: { ...inbox, ...data } });
+            navigate(`/active/${inbox._id}`);
         }
     }
     return (
         <div className='w-full bg-dark-background flex flex-col items-center pb-3'>
             {activePeople.map((data, idx) =>
-                <Link key={idx} to="" onClick={async () => await handleClick(data.userId, data)} style={{ textDecoration: 'none', color: 'inherit' }} className="w-11/12">
+                <Link key={idx} to="" onClick={async () => await handleClick(data.userId)} style={{ textDecoration: 'none', color: 'inherit' }} className="w-11/12">
                     <PersonSearch {...data} />
                 </Link>
             )}

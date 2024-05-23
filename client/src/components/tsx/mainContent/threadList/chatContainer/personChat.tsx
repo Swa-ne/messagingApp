@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PersonChatProps } from "../../../../../types/chat";
 import { formatTimestamp } from "../../../../../utils/convertTime";
 
-export default function PersonChat({ profile, name, chat, isActive = false }: PersonChatProps): React.ReactElement {
+export default function PersonChat({ profile, fullName, chat, isActive = false }: PersonChatProps): React.ReactElement {
     const [isOnline, setIsOnline] = useState(true)
     useEffect(() => {
         setIsOnline(true)
@@ -16,10 +16,10 @@ export default function PersonChat({ profile, name, chat, isActive = false }: Pe
                 {isOnline && <div className="bg-green-400 w-2 h-2 rounded-full absolute bottom-1 right-1 z-10"></div>}
             </div>
             <div className="w-3/4 flex flex-col justify-center">
-                <h4 className={`${!chat.isRead ? 'font-bold' : "font-normal"}`}> {name} </h4>
+                <h4 className={`${!chat.isRead ? 'font-bold' : "font-normal"}`}> {fullName} </h4>
                 <p className="text-xs">
                     <span className={`${!chat.isRead && 'font-bold'} text-ellipsis overflow-hidden max-w-[80%]`}>
-                        {chat.sender ? `You: ${chat.message}` : chat.message}
+                        {chat.senderId ? `You: ${chat.message}` : chat.message}
                     </span>
                     <span>{formatTimestamp(chat.timestamp)}</span>
                 </p>
