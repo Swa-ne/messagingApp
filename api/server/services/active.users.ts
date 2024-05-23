@@ -40,3 +40,18 @@ export async function CheckUserStatusIfActive(userId: any) {
         return false
     }
 }
+export async function GetSocketId(userId: any) {
+    try {
+        const result = await ActiveUsers.findOne({ userId })
+        if (!result) {
+            return false
+        }
+        if (result.active === "0") {
+            return false
+        }
+        return result.active
+    } catch (error) {
+        console.error('Error finding user status:', error);
+        return false
+    }
+}
