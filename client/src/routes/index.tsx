@@ -7,8 +7,8 @@ import DefaultProps from '../types/defaultProps';
 export default function ThreadListRoutes({ socket }: DefaultProps) {
     return (
         <Routes>
-            <Route path='/' element={<ChatContainer socket={socket} />} />
-            <Route path='/:id' element={<ChatContainer socket={socket} />} />
+            <Route path='/' element={<ChatContainer />} />
+            <Route path='/:id' element={<ChatContainer />} />
             <Route path='/active/' element={<ActiveContainer socket={socket} />} />
             <Route path='/active/:id' element={<ActiveContainer socket={socket} />} />
         </Routes>
