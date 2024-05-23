@@ -1,12 +1,13 @@
 import ChatIcon from '../../../assets/chat';
 import PeopleIcon from '../../../assets/people';
-import SettignsIcon from '../../../assets/settings';
+// import SettignsIcon from '../../../assets/settings';
 import LogoutIcon from '../../../assets/logout';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../../../services/entry';
 import { useEffect, useState } from 'react';
 
 export default function SideBar() {
+    const navigate = useNavigate()
     const [id, setId] = useState<string | null>(null);
     const location = useLocation();
 
@@ -29,10 +30,11 @@ export default function SideBar() {
                 <Link to={id ? `/active/${id}` : "/active"}>
                     <PeopleIcon />
                 </Link>
-                <SettignsIcon />
+                {/* <SettignsIcon /> */}
             </div>
             <div className='flex flex-col justify-around' onClick={() => {
                 logout()
+                navigate("/")
                 window.location.reload();
             }}>
                 <LogoutIcon />
