@@ -27,3 +27,16 @@ export function formatTimestamp(timestamp: string): string {
         return ` ${Math.floor(diff / year)}y`;
     }
 }
+
+export function timestampToDate(timestamp: string) {
+    try {
+        const date = new Date(timestamp);
+
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        const formattedDate = formatter.format(date);
+        return formattedDate
+    } catch {
+        return ""
+    }
+}
