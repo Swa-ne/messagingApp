@@ -16,3 +16,21 @@ export const getActiveUsers = async () => {
         });
     return response.message;
 };
+
+export const getInboxDetails = async (chatId: string) => {
+    const response = await axios
+        .get(`${apiURL}/chat/getInboxDetails`, {
+            withCredentials: true,
+            headers: {
+                authorization: cookies.get('authorization'),
+            },
+            params: {
+                chatId
+            }
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+            throw error;
+        });
+    return response.message;
+};
