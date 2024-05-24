@@ -85,7 +85,7 @@ To get started with this project, follow these steps:
 
     ```
 
-5. Access the application at [www.messageingapp.com](www.messageingapp.com).
+5. Access the application at [https://messagingappclient.onrender.com/](https://messagingappclient.onrender.com/).
 
 ## Contributing
 
