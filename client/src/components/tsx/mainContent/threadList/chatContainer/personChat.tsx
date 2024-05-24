@@ -16,7 +16,7 @@ export default function PersonChat({ profile, chatName, lastMessage, isActive = 
         setIsOnline(isActive)
     }, [isActive])
     return (
-        <div className={`thread-list w-11/12 h-[50px] ${isActive && "bg-light-accent bg-opacity-60"} hover:bg-light-accent hover:bg-opacity-30 flex py-2 rounded my-[1px] cursor-pointer`}>
+        <div className={`thread-list w-full h-[50px] ${isActive && "bg-light-accent bg-opacity-60"} hover:bg-light-accent hover:bg-opacity-30 flex py-2 rounded my-[1px] cursor-pointer`}>
             <div className="w-[45px] p-1 mr-2 relative">
                 <div className="w-full h-full object-cover rounded-full overflow-hidden">
                     <img src={profile} className="w-full h-full object-cover" />
