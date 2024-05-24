@@ -17,7 +17,7 @@ export default function ReceiverBox({ profile, message, createdAt, isLatest = fa
                     </div>
                 }
             </div>
-            <div className='max-w-[80%] rounded-xl rounded-bl-sm p-2 m-[1px] self-start bg-gray-500' title={timestampToDate(createdAt)}>
+            <div className='max-w-[80%] rounded-xl rounded-bl-sm p-2 m-[1px] self-start bg-green-500' title={timestampToDate(createdAt)}>
                 <p className="whitespace-pre-wrap break-all">
                     {message}
                 </p>
