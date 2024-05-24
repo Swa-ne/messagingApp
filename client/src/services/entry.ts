@@ -19,6 +19,15 @@ export const login = async (data: LoginCredentials) => {
     return response;
 };
 
+export const signup = async (data: LoginCredentials) => {
+    const response = await axios
+        .post(`${apiURL}/entry/signup`, data)
+        .then((response) => response.data)
+        .catch((error) => {
+            throw error;
+        });
+    return response;
+};
 export const logout = () => {
     cookies.remove('authorization');
     cookies.remove('userFullName');
