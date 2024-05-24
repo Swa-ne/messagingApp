@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import http from "http";
 import { ChangeUsersStatusToActive, ChangeUsersStatusToInactive, CheckUserStatusIfActive, GetSocketId } from "../services/active.users";
 import { getAllActiveUsers } from "../services/user";
-import { CLIENT_URL } from "..";
+const CLIENT_URL: any = process.env.CLIENT_URL;
 
 const app = express();
 

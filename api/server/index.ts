@@ -11,8 +11,7 @@ import chatRoutes from "./routes/chat";
 import { app, server } from "./sockets/socketServer";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
-export const CLIENT_URL: any = process.env.CLIENT_URL;
-
+const CLIENT_URL: any = process.env.CLIENT_URL;
 mongoose
   .connect(MONGODB_CONNECTION)
   .then(() => {
