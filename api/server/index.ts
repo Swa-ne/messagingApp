@@ -11,6 +11,7 @@ import chatRoutes from "./routes/chat";
 import { app, server } from "./sockets/socketServer";
 
 const MONGODB_CONNECTION: any = process.env.MONGODB_CONNECTION;
+export const CLIENT_URL: any = process.env.CLIENT_URL;
 
 mongoose
   .connect(MONGODB_CONNECTION)
@@ -24,7 +25,7 @@ mongoose
 const port = 3000;
 app.use(
   cors({
-    origin: ['http://127.0.0.1:5173', "http://localhost:5173"],
+    origin: CLIENT_URL,
     credentials: true,
   })
 );

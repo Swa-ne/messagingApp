@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import http from "http";
 import { ChangeUsersStatusToActive, ChangeUsersStatusToInactive, CheckUserStatusIfActive, GetSocketId } from "../services/active.users";
 import { getAllActiveUsers } from "../services/user";
+import { CLIENT_URL } from "..";
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.json())
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173", "http://localhost:5173/"],
+        origin: CLIENT_URL,
     },
 });
 
