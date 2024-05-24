@@ -15,7 +15,7 @@ export default function ActiveList({ activePeople }: ActiveListProps) {
         }
     }
     return (
-        <div className='w-full bg-dark-background flex flex-col items-center pb-3'>
+        <div className='m-2 bg-dark-primary rounded-lg shadow-lg flex flex-col items-center hover-brightness'>
             {activePeople.map((data, idx) =>
                 <Link key={idx} to="" onClick={async () => await handleClick(data.userId)} style={{ textDecoration: 'none', color: 'inherit' }} className="w-11/12">
                     <PersonSearch {...data} />

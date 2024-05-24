@@ -23,7 +23,7 @@ export default function SideBar() {
     }, [location]);
     return (
         <div className='sidebar w-[30px] flex justify-between items-center p-3 flex-col'>
-            <div className='h-1/4 flex flex-col justify-around'>
+            <div className='h-1/6 flex flex-col justify-around'>
                 <Link to={id ? `/${id}` : "/"}>
                     <ChatIcon />
                 </Link>

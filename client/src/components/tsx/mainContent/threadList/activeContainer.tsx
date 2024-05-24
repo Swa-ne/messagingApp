@@ -23,7 +23,7 @@ export default function ActiveContainer({ socket }: DefaultProps) {
         fetchData()
     }, [userId])
     return (
-        <div className='w-full h-full bg-dark-background overflow-y-scroll'>
+        <div className='w-full h-full rounded-lg shadow-2xl overflow-y-scroll'>
             <h3 className="p-3">
                 People
                 <br />
