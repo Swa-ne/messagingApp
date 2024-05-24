@@ -13,6 +13,7 @@ export interface UserSchemaInterface extends Document {
 }
 
 export interface ActiveUsersSchemeInterface extends Document {
+    _id: string,
     userId: UserSchemaInterface,
     active: string,
     profile: string,

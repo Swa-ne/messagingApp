@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Inbox, Message } from "../models/chat"
+import { Inbox, InboxSchemeInterface, Message } from "../models/chat"
 import { ActiveUsers, User } from "../models/user";
 
 export async function getChatMessages(chatId: string, page: string) {
@@ -20,7 +20,7 @@ export async function saveMessage(message: string, senderId: string, chatId: str
         if (!inbox) {
             return { 'message': 'Inbox not found', "httpCode": 404 };
         }
-        inbox.lastMessage = msgId._id
+        inbox.lastMessage = msgId
         if (!inbox.wasActive) {
             inbox.wasActive = true
         }
@@ -32,9 +32,9 @@ export async function saveMessage(message: string, senderId: string, chatId: str
 }
 export async function createInbox(userIds: string[], isGroup: boolean, chatName?: string, profile?: string) {
     try {
-        let activeUserIds = []
+        let activeUserIds: string[] = []
         const activeUsers = await ActiveUsers.find({ userId: { $in: userIds } });
-        activeUserIds = activeUsers.map((activeUser) => activeUser._id);
+        activeUserIds = activeUsers.map((activeUser) => activeUser._id.toString());
         const availableInbox = await inboxAvailable(activeUserIds, isGroup)
         if (!availableInbox) {
             const wasActive = isGroup

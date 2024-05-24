@@ -22,7 +22,6 @@ export default function ChatList() {
             setChatList(await getInbox())
         }
         fetchData()
-        console.log(showDetails)
     }, [showDetails])
     return (
         <div className='w-full flex flex-col items-center py-3 overflow-x-hidden'>

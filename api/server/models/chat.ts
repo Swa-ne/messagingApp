@@ -42,7 +42,7 @@ const MessageScheme: Schema = new Schema({
 const InboxScheme: Schema = new Schema({
     userIds: [{
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'ActiveUsers',
     }],
     chatName: {
         type: String,
@@ -68,5 +68,5 @@ const InboxScheme: Schema = new Schema({
     timestamps: true,
 })
 
-export const Message = mongoose.model<InboxSchemeInterface>("Message", MessageScheme)
+export const Message = mongoose.model<MessageProps>("Message", MessageScheme)
 export const Inbox = mongoose.model<InboxSchemeInterface>("Inbox", InboxScheme)

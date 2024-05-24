@@ -20,7 +20,7 @@ export default function ChatBoxHeader({ details, activeDetails }: ChatBoxHeaderP
         setIsOnline(true)
     }, [])
     useEffect(() => {
-        if (details && activeDetails) {
+        if (details && activeDetails?.length) {
             if (!details.isGroup) setName(details.chatName === "" ? activeDetails[0].fullName === userFullName ? activeDetails[1].fullName : activeDetails[0].fullName : details.chatName)
             else setName(details.chatName === "" ? `${activeDetails[0].fullName}, ${activeDetails[1].fullName}` : details.chatName)
             setProfile(details.profile)

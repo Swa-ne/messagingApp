@@ -47,7 +47,8 @@ export default function ChatMainBox({ socket, messages, details, activeDetails }
         }
     }, [socket, details])
     useEffect(() => {
-        if (messages && activeDetails) {
+        if (messages && activeDetails?.length) {
+
             setCurrentMessages(messages)
             setReceiverName(activeDetails[0].fullName)
         }
