@@ -1,48 +1,33 @@
-import { PersonChatProps } from "../../../../../types/chat";
+import { useEffect, useState } from "react";
+import { Chat, PersonChatProps } from "../../../../../types/chat";
 import PersonChat from "./personChat";
-
-const mockData: PersonChatProps[] = [
-    {
-        profile: 'https://i.pinimg.com/originals/58/51/2e/58512eb4e598b5ea4e2414e3c115bef9.jpg',
-        name: 'John',
-        chat: {
-            message: 'Hello there!',
-            sender: 'John',
-            receiver: 'Jane',
-            isRead: true,
-            timestamp: '2024-05-08T12:00:00'
-        }
-    },
-    {
-        profile: 'https://i.pinimg.com/originals/58/51/2e/58512eb4e598b5ea4e2414e3c115bef9.jpg',
-        name: 'Jane',
-        chat: {
-            message: 'Hi John!',
-            sender: 'Jane',
-            receiver: 'John',
-            isRead: true,
-            timestamp: '2024-05-08T12:01:00'
-        }
-    },
-    {
-        profile: 'https://i.pinimg.com/originals/58/51/2e/58512eb4e598b5ea4e2414e3c115bef9.jpg',
-        name: 'Alice',
-        chat: {
-            message: 'Hey folks!',
-            sender: 'Alice',
-            receiver: 'Bob',
-            isRead: false,
-            timestamp: '2024-05-08T12:02:00'
-        }
-    }
-];
-
+import { getInbox } from "../../../../../services/users";
+import { cookies } from "../../../../../services/entry";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../state/store";
+interface ChatList extends PersonChatProps {
+    chatName: string,
+    userIds: PersonChatProps[],
+    lastMessage: Chat,
+    isActive: boolean
+}
 export default function ChatList() {
+    const [chatList, setChatList] = useState<ChatList[]>([])
+    const userFullName = cookies.get("userFullName")
+    const showDetails = useSelector((state: RootState) => state.toggle.isVisible)
+    useEffect(() => {
+        async function fetchData() {
+            setChatList(await getInbox())
+        }
+        fetchData()
+        console.log(showDetails)
+    }, [showDetails])
     return (
         <div className='w-full bg-dark-background flex flex-col items-center py-3'>
-            {mockData.map((data, idx) =>
-                <PersonChat key={idx} {...data} />
-            )}
+            {chatList && chatList.map((data, idx) => {
+                data.chatName = data.chatName === "" ? data.userIds[0].fullName === userFullName ? data.userIds[1].fullName : data.userIds[0].fullName : data.chatName
+                return <PersonChat key={idx} {...data} />
+            })}
         </div>
     );
 }

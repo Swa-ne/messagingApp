@@ -34,3 +34,18 @@ export const getInboxDetails = async (chatId: string) => {
         });
     return response.message;
 };
+
+export const getInbox = async () => {
+    const response = await axios
+        .get(`${apiURL}/user/get_inbox`, {
+            withCredentials: true,
+            headers: {
+                authorization: cookies.get('authorization'),
+            }
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+            throw error;
+        });
+    return response.message;
+};
