@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { InboxSchemeInterface } from './chat';
 
 export interface UserSchemaInterface extends Document {
     firstName: string,
@@ -8,11 +9,11 @@ export interface UserSchemaInterface extends Document {
     personalNumber: string,
     birthday: string,
     passwordHash: string,
-    inbox: []
+    inbox: InboxSchemeInterface[]
 }
 
 export interface ActiveUsersSchemeInterface extends Document {
-    userId: string,
+    userId: UserSchemaInterface,
     active: string,
     profile: string,
     fullName: string,

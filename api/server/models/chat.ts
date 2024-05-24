@@ -1,18 +1,20 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { UserSchemaInterface } from './user';
 
 export interface MessageProps {
     message: string,
-    sender: string,
-    chatId: string,
+    sender: UserSchemaInterface,
+    chatId: InboxSchemeInterface,
     isRead: boolean
 }
 
 export interface InboxSchemeInterface extends Document {
-    userIds: string[],
+    userIds: UserSchemaInterface[],
     chatName?: string,
     profile?: string,
     isGroup: boolean,
     wasActive: boolean,
+    lastMessage: MessageProps,
 }
 
 
@@ -58,6 +60,10 @@ const InboxScheme: Schema = new Schema({
         type: Boolean,
         default: false
     },
+    lastMessage: {
+        type: Schema.Types.ObjectId,
+        ref: 'Message'
+    }
 }, {
     timestamps: true,
 })
