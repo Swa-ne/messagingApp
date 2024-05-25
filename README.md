@@ -10,7 +10,7 @@ Welcome to the Messaging App repository! This application allows users to commun
 -   **Redux State Management:** State management is handled efficiently using Redux, providing a predictable state container for the application.
 -   **RESTful API:** The backend is built with Express.js, providing a RESTful API for managing user authentication and message handling.
 -   **Database Integration:** MongoDB Atlas is used as the database, with Mongoose providing an elegant MongoDB object modeling for Node.js.
--   **Hosted on Vercel:** Both the frontend and backend are hosted on Vercel, ensuring reliability and scalability.
+-   **Hosted on Render:** Both the frontend and backend are hosted on Render, ensuring reliability and scalability.
 
 ## Technologies Used
 
@@ -58,12 +58,12 @@ To get started with this project, follow these steps:
 3. Configure environment variables:
 
     - **Frontend:**
-      Create a `.env` file in the `frontend` directory and add the following content:
+      Create a `.env` file in the `client` directory and add the following content:
         ```plaintext
         VITE_API_BASE_URL="http://localhost:3000"
         ```
     - **Backend:**
-      Create a `.env` file in the `backend` directory and add the following content:
+      Create a `.env` file in the `api` directory and add the following content:
         ```plaintext
         MONGODB_CONNECTION = '<your MongoDB connection string>'
         ACCESS_TOKEN_SECRET="<your access token secret>"
