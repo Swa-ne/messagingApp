@@ -16,7 +16,7 @@ Welcome to the Messaging App repository! This application allows users to commun
 
 -   **Frontend:**
 
-    -   React.js (with TypeScript)
+    -   React.js (TypeScript)
     -   Redux
     -   Socket.IO Client
     -   Axios
